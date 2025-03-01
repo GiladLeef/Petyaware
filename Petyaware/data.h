@@ -731,3 +731,37 @@ unsigned char kernel[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
+
+/*
+Extract the assembly from the bytes:
+
+#include <stdio.h>
+
+// Define the bootloader and kernel arrays
+extern unsigned char bootloader[];
+extern unsigned char kernel[];
+
+// Get their sizes dynamically
+#define BOOTLOADER_SIZE  (sizeof(bootloader))
+#define KERNEL_SIZE      (sizeof(kernel))
+
+void save_to_file(const char *filename, unsigned char *data, unsigned int size) {
+    FILE *file = fopen(filename, "wb");
+    if (!file) {
+        perror("Failed to open file");
+        return;
+    }
+    fwrite(data, 1, size, file);
+    fclose(file);
+    printf("Saved %s (%u bytes)\n", filename, size);
+}
+
+int main() {
+    save_to_file("bootloader.bin", bootloader, BOOTLOADER_SIZE);
+    save_to_file("kernel.bin", kernel, KERNEL_SIZE);
+    return 0;
+}
+    Then run:
+    objdump -D -b binary -m i386 bootloader.bin > bootloader.asm
+    objdump -D -b binary -m i386 kernel.bin > kernel.asm
+*/
