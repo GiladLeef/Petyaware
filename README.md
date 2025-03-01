@@ -1,5 +1,3 @@
-# Petyaware
-
 ## Overview
 Petyaware is a complete rewrite of the original Red Petya ransomware, designed to function on both MBR (Master Boot Record) and GPT (GUID Partition Table) disks. To operate on GPT disks, the system's UEFI firmware must support Legacy Boot mode.
 
